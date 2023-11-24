@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <time.h>
 
+#include "MacUILib.h"
 #include "objPos.h"
 #include "objPosArrayList.h"
 
@@ -21,9 +22,11 @@ class GameMechs
     private:
         char input;
         bool exitFlag;
+        bool loseFlag;
         
         int boardSizeX;
         int boardSizeY;
+        int score;
 
     public:
         GameMechs();
@@ -38,6 +41,8 @@ class GameMechs
 
         int getBoardSizeX();
         int getBoardSizeY();
+        int getscore();
+        void incrementScore();
       
 
 };
