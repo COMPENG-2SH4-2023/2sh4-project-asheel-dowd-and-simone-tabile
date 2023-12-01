@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "Player.h"
 #include "GameMechs.h"
+#include "objPosArrayList.h"
 #include <time.h>
 
 GameMechs *gm; 
@@ -57,9 +58,9 @@ void Initialize(void)
 
     srand(time(NULL));
 
-
     objPosArrayList* playerPos;
-    player -> getPlayerPos(playerPos);
+
+    player->getPlayerPos();
 
     //gm->generateFood(playerPos);
 }
@@ -83,15 +84,12 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();
 
-    objPosArrayList* playerPos;
+    objPosArrayList* playerPos = player->getPlayerPos();
     //objPos temp2; //food temp
     objPos temp1; //player temp
     //temp2 = objPos();
     temp1 = objPos();
     bool isPrinted;
-
-    player -> getPlayerPos(playerPos);
-
     for(int i = 0; i < gm->getBoardSizeY(); i++)
     {
         for(int j = 0; j < gm->getBoardSizeX(); j++)
@@ -105,7 +103,6 @@ void DrawScreen(void)
                 isPrinted = false;
 
                 //gm -> getFoodPos(temp2);
-                player -> getPlayerPos(playerPos);
 
                 for(int k = 0; k < playerPos->getSize(); k++)
                 {
