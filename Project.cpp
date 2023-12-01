@@ -3,6 +3,7 @@
 #include "objPos.h"
 #include "Player.h"
 #include "GameMechs.h"
+#include <time.h>
 
 GameMechs *gm; 
 Player *player;
@@ -53,6 +54,16 @@ void Initialize(void)
     gm = new GameMechs(30, 15);
 
     player = new Player(gm);
+
+    srand(time(NULL));
+
+    objPos temp3;
+
+    temp3 = objPos();
+
+    player -> getPlayerPos(temp3);
+
+    gm->generateFood(temp3);
 }
 
 void GetInput(void)
@@ -85,11 +96,20 @@ void DrawScreen(void)
             else
             {
                 objPos temp;
+                objPos temp2;
+
                 temp = objPos();
+                temp2 = objPos();
+
+                gm -> getFoodPos(temp2);
                 player -> getPlayerPos(temp);
 
                 if (temp.x== j && temp.y == i)
                     MacUILib_printf("%c", temp.getSymbol());
+
+                else if (temp2.x == j && temp2.y == i)
+                    MacUILib_printf("%c", temp2.getSymbol());
+
                 else
                     MacUILib_printf(" ");
             }    
