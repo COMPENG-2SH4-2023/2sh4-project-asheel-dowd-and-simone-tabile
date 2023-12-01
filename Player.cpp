@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "GameMechs.h"
+#include "objPosArrayList.h"
 
 
 Player::Player(GameMechs* thisGMRef)
@@ -9,8 +10,11 @@ Player::Player(GameMechs* thisGMRef)
 
     // more actions to be included
 
-    playerPos = objPos(15, 7, '*');
-    
+    objPos newPos;
+    newPos = objPos(15, 7, '*');
+
+    playerPosList = new objPosArrayList();
+    playerPosList->insertHead(newPos);
 }
 
 
@@ -18,15 +22,17 @@ Player::~Player()
 {
     // delete any heap members here
     delete mainGameMechsRef;
+    delete playerPosList;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+void Player::getPlayerPos(objPosArrayList* returnPos)
 {
     // return the reference to the playerPos arrray list
-    returnPos.x = playerPos.x;
-    returnPos.y = playerPos.y;
-    returnPos.symbol = playerPos.symbol;
+    // returnPos.x = playerPos.x;
+    // returnPos.y = playerPos.y;
+    // returnPos.symbol = playerPos.symbol;
 
+    returnPos = playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -75,53 +81,73 @@ void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
 
+    objPos movePos;
+    movePos = objPos();
+
     switch(myDir)
     {
         case(UP):
-            if(playerPos.y == 1 && myDir == UP)
+            if(movePos.y == 1 && myDir == UP)
             {
-                playerPos.y = 13;
+                movePos.y = 13;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             else
             {
-                playerPos.y--;
+                movePos.y--;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             break;
 
         case(DOWN):
-            if(playerPos.y == 13 && myDir == DOWN)
+            if(movePos.y == 13 && myDir == DOWN)
             {
-                playerPos.y = 1;
+                movePos.y = 1;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             else
             {
-                playerPos.y++;
+                movePos.y++;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             break;
 
         case(RIGHT):
-            if(playerPos.x == 28 && myDir == RIGHT)
+            if(movePos.x == 28 && myDir == RIGHT)
             {
-                playerPos.x = 1;
+                movePos.x = 1;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             else
             {
-                playerPos.x++;
+                movePos.x++;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             break;
         
         case(LEFT):
-            if(playerPos.x == 1 && myDir == LEFT)
+            if(movePos.x == 1 && myDir == LEFT)
             {
-                playerPos.x = 28;
+                movePos.x = 28;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             else
             {
-                playerPos.x--;
+                movePos.x--;
+                playerPosList->insertHead(movePos);
+                playerPosList->removeTail();
             }
             break;
         default:
             break;
+
     }
 }
 

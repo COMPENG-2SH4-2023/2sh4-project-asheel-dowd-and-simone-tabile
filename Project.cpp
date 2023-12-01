@@ -57,13 +57,11 @@ void Initialize(void)
 
     srand(time(NULL));
 
-    objPos temp3;
+    objPosArrayList* playerPos;
 
-    temp3 = objPos();
+    player -> getPlayerPos(playerPos);
 
-    player -> getPlayerPos(temp3);
-
-    gm->generateFood(temp3);
+    gm->generateFood(playerPos);
 }
 
 void GetInput(void)
@@ -84,6 +82,10 @@ void RunLogic(void)
 void DrawScreen(void)
 {
     MacUILib_clearScreen();
+
+    objPosArrayList* playerPos;
+
+    player -> getPlayerPos(playerPos);
 
     for(int i = 0; i < gm->getBoardSizeY(); i++)
     {

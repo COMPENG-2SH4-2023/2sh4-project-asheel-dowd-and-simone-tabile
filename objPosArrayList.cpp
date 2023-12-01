@@ -8,7 +8,7 @@
 objPosArrayList::objPosArrayList()
 {
     sizeArray = ARRAY_MAX_CAP;
-    sizeList = 0;
+    sizeList = 3;
     aList = new objPos[ARRAY_MAX_CAP];
 }
 
