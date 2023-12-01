@@ -57,11 +57,11 @@ void Initialize(void)
 
     srand(time(NULL));
 
-    objPosArrayList* playerPos;
 
+    objPosArrayList* playerPos;
     player -> getPlayerPos(playerPos);
 
-    gm->generateFood(playerPos);
+    //gm->generateFood(playerPos);
 }
 
 void GetInput(void)
@@ -84,6 +84,11 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     objPosArrayList* playerPos;
+    //objPos temp2; //food temp
+    objPos temp1; //player temp
+    //temp2 = objPos();
+    temp1 = objPos();
+    bool isPrinted;
 
     player -> getPlayerPos(playerPos);
 
@@ -97,22 +102,24 @@ void DrawScreen(void)
             }    
             else
             {
-                objPos temp;
-                objPos temp2;
+                isPrinted = false;
 
-                temp = objPos();
-                temp2 = objPos();
+                //gm -> getFoodPos(temp2);
+                player -> getPlayerPos(playerPos);
 
-                gm -> getFoodPos(temp2);
-                player -> getPlayerPos(temp);
+                for(int k = 0; k < playerPos->getSize(); k++)
+                {
+                    playerPos->getElement(temp1, k);
+                    if(temp1.x == j && temp1.y == i)
+                    {
+                        MacUILib_printf("%c", temp1.getSymbol());
+                        isPrinted = true;
+                    }
+                }
+                // if (temp2.x == j && temp2.y == i)
+                //     MacUILib_printf("%c", temp2.getSymbol());
 
-                if (temp.x== j && temp.y == i)
-                    MacUILib_printf("%c", temp.getSymbol());
-
-                else if (temp2.x == j && temp2.y == i)
-                    MacUILib_printf("%c", temp2.getSymbol());
-
-                else
+                if (!isPrinted)
                     MacUILib_printf(" ");
             }    
         }

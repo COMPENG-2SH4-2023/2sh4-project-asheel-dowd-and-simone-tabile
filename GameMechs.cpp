@@ -102,8 +102,10 @@ void GameMechs::generateFood(objPos blockOff)
     foodPos.y = randY;
 }
 
-void GameMechs::getFoodPos(objPosArrayList* returnPos)
+void GameMechs::getFoodPos(objPos returnPos)
 {
-    returnPos = foodPos;
+    returnPos.x = foodPos.x;
+    returnPos.y = foodPos.y;
+    returnPos.symbol = foodPos.symbol;
 }
 

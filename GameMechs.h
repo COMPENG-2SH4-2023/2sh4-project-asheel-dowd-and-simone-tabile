@@ -46,7 +46,7 @@ class GameMechs
         void incrementScore();
 
         void generateFood(objPos blockOff);
-        void getFoodPos(objPosArrayList* returnPos);
+        void getFoodPos(objPos returnPos);
       
 
 };
