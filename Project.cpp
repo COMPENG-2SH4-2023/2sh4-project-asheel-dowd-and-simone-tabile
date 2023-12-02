@@ -60,9 +60,9 @@ void Initialize(void)
 
     objPosArrayList* playerPos;
 
-    player->getPlayerPos();
+    playerPos = player->getPlayerPos();
 
-    //gm->generateFood(playerPos);
+    gm->generateFood(playerPos);
 }
 
 void GetInput(void)
@@ -85,10 +85,11 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     objPosArrayList* playerPos = player->getPlayerPos();
-    //objPos temp2; //food temp
+    objPos temp2; //food temp
     objPos temp1; //player temp
-    //temp2 = objPos();
+    temp2 = objPos();
     temp1 = objPos();
+    gm -> getFoodPos(temp2);
     bool isPrinted;
     for(int i = 0; i < gm->getBoardSizeY(); i++)
     {
@@ -102,9 +103,14 @@ void DrawScreen(void)
             {
                 isPrinted = false;
 
-                //gm -> getFoodPos(temp2);
+                if ((temp2.x == j) && (temp2.y == i) && !isPrinted
+                ) 
+                {
+                    MacUILib_printf("%c", temp2.getSymbol());
+                    isPrinted = true;
+                }            
 
-                for(int k = 0; k < playerPos->getSize(); k++)
+                for(int k = 0; k < playerPos->getSize() && !isPrinted; k++)
                 {
                     playerPos->getElement(temp1, k);
                     if(temp1.x == j && temp1.y == i)
@@ -113,8 +119,6 @@ void DrawScreen(void)
                         isPrinted = true;
                     }
                 }
-                // if (temp2.x == j && temp2.y == i)
-                //     MacUILib_printf("%c", temp2.getSymbol());
 
                 if (!isPrinted)
                     MacUILib_printf(" ");
@@ -122,6 +126,9 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }
+
+    MacUILib_printf("your score is %d", gm->getscore());
+
 }
 
 void LoopDelay(void)
@@ -133,6 +140,14 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
+
+    if(gm->getLoseFlagStatus() == true)
+    {
+        MacUILib_printf("haha you lost");
+        MacUILib_printf("\n");
+        MacUILib_printf("your score was %d", gm->getscore());
+
+    }
   
     MacUILib_uninit();
 }

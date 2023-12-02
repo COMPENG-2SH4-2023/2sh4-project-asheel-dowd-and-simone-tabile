@@ -35,6 +35,11 @@ bool GameMechs::getExitFlagStatus()
     return exitFlag;
 }
 
+bool GameMechs::getLoseFlagStatus()
+{
+    return loseFlag;
+}
+
 char GameMechs::getInput()
 {
     return input;
@@ -54,6 +59,11 @@ int GameMechs::getBoardSizeY()
 void GameMechs::setExitTrue()
 {
     exitFlag = true;
+}
+
+void GameMechs::setLoseFlag()
+{
+    loseFlag = true;
 }
 
 void GameMechs::setInput(char this_input)
@@ -76,11 +86,15 @@ void GameMechs::incrementScore()
     score++;
 }
 
-void GameMechs::generateFood(objPos blockOff)
+void GameMechs::generateFood(objPosArrayList* blockOff)
 {
     int check;
     int randX;
     int randY;
+
+    objPos tempPos;
+
+    tempPos = objPos();
 
     check = 0;
     while(!check)
@@ -88,13 +102,21 @@ void GameMechs::generateFood(objPos blockOff)
         check = 1;
         randX = rand() % (getBoardSizeX()-2)+1;
         randY = rand() % (getBoardSizeY()-2)+1;
-        if((randX != blockOff.x) && (randY != blockOff.y))
+
+        for(int i=0; i < blockOff->getSize(); i++)
         {
-            check = 1;
-        }
-        else
-        {
-            check = 0;
+            blockOff->getElement(tempPos, i);
+            {
+                if((randX == tempPos.x) && (randY == tempPos.y))
+                {
+                    check = 0;
+                    break;
+                }
+                else
+                {
+                    check = 1;
+                }
+            }
         }
     }
 
@@ -102,7 +124,7 @@ void GameMechs::generateFood(objPos blockOff)
     foodPos.y = randY;
 }
 
-void GameMechs::getFoodPos(objPos returnPos)
+void GameMechs::getFoodPos(objPos &returnPos)
 {
     returnPos.x = foodPos.x;
     returnPos.y = foodPos.y;

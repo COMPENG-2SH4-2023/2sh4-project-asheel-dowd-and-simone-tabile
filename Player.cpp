@@ -11,7 +11,7 @@ Player::Player(GameMechs* thisGMRef)
     // more actions to be included
 
     objPos newPos;
-    newPos = objPos(15, 7, '*');
+    newPos = objPos(15, 7, 'O');
 
     playerPosList = new objPosArrayList();
     playerPosList->insertHead(newPos);
@@ -82,7 +82,11 @@ void Player::movePlayer()
     // PPA3 Finite State Machine logic
 
     objPos currHead;
+    objPos tempfoodpos;
+    objPos tempcheck;
+
     playerPosList->getHeadElement(currHead);
+    mainGameMechsRef->getFoodPos(tempfoodpos);
 
     switch(myDir)
     {
@@ -140,7 +144,31 @@ void Player::movePlayer()
         default:
             break;
     }
-    playerPosList->insertHead(currHead);
-    playerPosList->removeTail();
+
+    if((tempfoodpos.x == currHead.x) && (tempfoodpos.y == currHead.y))
+    {
+        playerPosList->insertHead(currHead);
+        mainGameMechsRef->generateFood(playerPosList);
+        if(playerPosList->getSize() > 1)
+        {
+            mainGameMechsRef->incrementScore();
+        }
+    }
+    else
+    {
+        playerPosList->insertHead(currHead);
+        playerPosList->removeTail();
+    }
+
+    for(int i=1; i < playerPosList->getSize(); i++)
+    {
+        playerPosList->getElement(tempcheck, i);
+        if((currHead.x == tempcheck.x) && (currHead.y == tempcheck.y) && (playerPosList->getSize() > 2))
+        {
+            mainGameMechsRef->setExitTrue();
+            mainGameMechsRef->setLoseFlag();
+        }
+    }
+    
 }
 
