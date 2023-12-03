@@ -1,6 +1,6 @@
 #include "GameMechs.h"
 
-GameMechs::GameMechs()
+GameMechs::GameMechs() //main constructor
 {
     input = 0;
     score = 0;
@@ -13,7 +13,7 @@ GameMechs::GameMechs()
     foodPos.symbol = 'f';
 }
 
-GameMechs::GameMechs(int boardX, int boardY)
+GameMechs::GameMechs(int boardX, int boardY) //custom constructor
 {
     input = 0;
     score = 0;
@@ -30,63 +30,63 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 
 
-bool GameMechs::getExitFlagStatus()
+bool GameMechs::getExitFlagStatus() //exit flag getter
 {
     return exitFlag;
 }
 
-bool GameMechs::getLoseFlagStatus()
+bool GameMechs::getLoseFlagStatus() //lose flag getter
 {
     return loseFlag;
 }
 
-char GameMechs::getInput()
+char GameMechs::getInput() // keyboard input getter 
 {
     return input;
 }
 
-int GameMechs::getBoardSizeX()
+int GameMechs::getBoardSizeX() //x border getter
 {
     return boardSizeX;
 }
 
-int GameMechs::getBoardSizeY()
+int GameMechs::getBoardSizeY() //y border getter
 {
     return boardSizeY;
 }
 
 
-void GameMechs::setExitTrue()
+void GameMechs::setExitTrue() //exit flag setter
 {
     exitFlag = true;
 }
 
-void GameMechs::setLoseFlag()
+void GameMechs::setLoseFlag() //lose flag setter
 {
     loseFlag = true;
 }
 
-void GameMechs::setInput(char this_input)
+void GameMechs::setInput(char this_input) //input setter
 {
     input = this_input;
 }
 
-void GameMechs::clearInput()
+void GameMechs::clearInput() //input setter
 {
     input = 0;
 }
 
-int GameMechs::getscore()
+int GameMechs::getscore() //score getter
 {
     return score;
 }
 
-void GameMechs::incrementScore()
+void GameMechs::incrementScore() //score increment
 {
     score++;
 }
 
-void GameMechs::generateFood(objPosArrayList* blockOff)
+void GameMechs::generateFood(objPosArrayList* blockOff) //generateFood function using ppa3 logic and iteration 3 alterations (pass by pointer)
 {
     int check;
     int randX;
@@ -124,7 +124,7 @@ void GameMechs::generateFood(objPosArrayList* blockOff)
     foodPos.y = randY;
 }
 
-void GameMechs::getFoodPos(objPos &returnPos)
+void GameMechs::getFoodPos(objPos &returnPos) //food position getter (pass by reference)
 {
     returnPos.x = foodPos.x;
     returnPos.y = foodPos.y;

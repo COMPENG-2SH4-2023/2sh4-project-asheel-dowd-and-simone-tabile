@@ -3,7 +3,7 @@
 #include "objPosArrayList.h"
 
 
-Player::Player(GameMechs* thisGMRef)
+Player::Player(GameMechs* thisGMRef) //main constructor with iteration 3 implementation
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
@@ -18,14 +18,14 @@ Player::Player(GameMechs* thisGMRef)
 }
 
 
-Player::~Player()
+Player::~Player() //destructor
 {
     // delete any heap members here
     delete mainGameMechsRef;
     delete playerPosList;
 }
 
-objPosArrayList* Player::getPlayerPos()
+objPosArrayList* Player::getPlayerPos() //position getter
 {
     // return the reference to the playerPos arrray list
     // returnPos.x = playerPos.x;
@@ -145,7 +145,7 @@ void Player::movePlayer()
             break;
     }
 
-    if((tempfoodpos.x == currHead.x) && (tempfoodpos.y == currHead.y))
+    if((tempfoodpos.x == currHead.x) && (tempfoodpos.y == currHead.y))//adding sneak head when on food
     {
         playerPosList->insertHead(currHead);
         mainGameMechsRef->generateFood(playerPosList);
@@ -154,13 +154,15 @@ void Player::movePlayer()
             mainGameMechsRef->incrementScore();
         }
     }
-    else
+
+    
+    else//general movement scheme
     {
         playerPosList->insertHead(currHead);
         playerPosList->removeTail();
     }
 
-    for(int i=1; i < playerPosList->getSize(); i++)
+    for(int i=1; i < playerPosList->getSize(); i++) //suicide check
     {
         playerPosList->getElement(tempcheck, i);
         if((currHead.x == tempcheck.x) && (currHead.y == tempcheck.y) && (playerPosList->getSize() > 2))

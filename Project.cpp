@@ -15,8 +15,6 @@ using namespace std;
 
 bool exitFlag;
 
-
-
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -31,7 +29,7 @@ int main(void)
 
     Initialize();
 
-    while(gm->getExitFlagStatus() == false)  
+    while(gm->getExitFlagStatus() == false) //check exit flag condition and if false, then continue
     {
         GetInput();
         RunLogic();
@@ -50,15 +48,15 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    exitFlag = false;
+    exitFlag = false; //set exitflag to false
 
-    gm = new GameMechs(30, 15);
+    gm = new GameMechs(30, 15); //initialize gm
 
-    player = new Player(gm);
+    player = new Player(gm); //initialize player
 
-    srand(time(NULL));
+    srand(time(NULL)); //seed time
 
-    objPosArrayList* playerPos;
+    objPosArrayList* playerPos; //set up player position list
 
     playerPos = player->getPlayerPos();
 
@@ -69,12 +67,13 @@ void GetInput(void)
 {
     if(MacUILib_hasChar())
     {
-        gm->setInput(MacUILib_getChar());
+        gm->setInput(MacUILib_getChar()); //use setter and MacUI function to get keyboard input
     }
 }
 
 void RunLogic(void)
 {
+    //movement logic
     player->updatePlayerDir();
     player->movePlayer();
 
@@ -84,18 +83,19 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();
 
-    objPosArrayList* playerPos = player->getPlayerPos();
+    objPosArrayList* playerPos = player->getPlayerPos(); //initialize playPos list again
+    //set up temps for pass by reference getters
     objPos temp2; //food temp
     objPos temp1; //player temp
     temp2 = objPos();
     temp1 = objPos();
     gm -> getFoodPos(temp2);
-    bool isPrinted;
+    bool isPrinted; ///check if food or player is printed
     for(int i = 0; i < gm->getBoardSizeY(); i++)
     {
         for(int j = 0; j < gm->getBoardSizeX(); j++)
         {
-            if(i == 0 || i == 14 || j == 0 || j == 29)
+            if(i == 0 || i == 14 || j == 0 || j == 29) //border print conditions
             {
                 MacUILib_printf("#");
             }    
@@ -103,14 +103,13 @@ void DrawScreen(void)
             {
                 isPrinted = false;
 
-                if ((temp2.x == j) && (temp2.y == i) && !isPrinted
-                ) 
+                if ((temp2.x == j) && (temp2.y == i)) //food print conditions
                 {
                     MacUILib_printf("%c", temp2.getSymbol());
                     isPrinted = true;
                 }            
 
-                for(int k = 0; k < playerPos->getSize() && !isPrinted; k++)
+                for(int k = 0; k < playerPos->getSize() && !isPrinted; k++) //character print loop and if statement 
                 {
                     playerPos->getElement(temp1, k);
                     if(temp1.x == j && temp1.y == i)
@@ -127,7 +126,7 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }
 
-    MacUILib_printf("your score is %d", gm->getscore());
+    MacUILib_printf("your score is %d", gm->getscore()); //score displayer
 
 }
 
@@ -141,13 +140,13 @@ void CleanUp(void)
 {
     MacUILib_clearScreen();    
 
-    if(gm->getLoseFlagStatus() == true)
+    if(gm->getLoseFlagStatus() == true) //suicide/lose message
     {
         MacUILib_printf("haha you lost");
         MacUILib_printf("\n");
         MacUILib_printf("your score was %d", gm->getscore());
 
     }
-  
+  d
     MacUILib_uninit();
 }
