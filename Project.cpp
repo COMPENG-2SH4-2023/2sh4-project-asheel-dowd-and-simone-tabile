@@ -147,6 +147,5 @@ void CleanUp(void)
         MacUILib_printf("your score was %d", gm->getscore());
 
     }
-  d
     MacUILib_uninit();
 }
